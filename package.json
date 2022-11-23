@@ -1,0 +1,22 @@
+{
+    "name": "typingrace",
+    "version": "1.0.0",
+    "description": "A multi player typing race game.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "parcel ./src/index.html",
+        "build": "parcel ./src/index.html"
+    },
+    "keywords": [
+        "[\"typing\"",
+        "\"race-game\"",
+        "\"typing-game\"",
+        "\"learn-typing\"]"
+    ],
+    "author": "Muhammad Sajid",
+    "license": "ISC",
+    "dependencies": {
+        "parcel-bundler": "^1.12.5"
+    }
+}
