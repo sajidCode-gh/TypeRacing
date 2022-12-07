@@ -66,6 +66,11 @@ a {
     width: 70%;
 }
 
+.player1,
+.player2 {
+    background-color: rgba(255, 255, 255, 0.586);
+}
+
 .slide {
     background-color: var(--secondary);
     box-shadow: 0px 0px 6px 1px rgba(255, 255, 255, 0.759);

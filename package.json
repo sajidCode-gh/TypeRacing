@@ -17,6 +17,7 @@
     "author": "Muhammad Sajid",
     "license": "ISC",
     "dependencies": {
+        "an-array-of-english-words": "^2.0.0",
         "parcel-bundler": "^1.12.5"
     }
 }
