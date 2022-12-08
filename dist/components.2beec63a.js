@@ -131,29 +131,27 @@ var Car = /*#__PURE__*/function () {
     this.words = words;
     this.player = player;
     this.words1 = words1;
+    this.speed = 0;
+    this.score = 0;
   }
   _createClass(Car, [{
-    key: "randamizedWords",
-    value: function randamizedWords() {
-      return this.words.sort(function () {
-        return Math.random() - 0.5;
-      });
-    }
-  }, {
-    key: "RenderWords",
-    value: function RenderWords() {
-      // let randomWords = this.randamizedWords()
-      // for(let i = 0; i < randomWords.length; i++) {
-      //     if(randomWords[i].length <= 3) {
-      //     }
-      // }
+    key: "RenderWord",
+    value: function RenderWord() {
+      var randomIndex = Math.floor(Math.random() * this.words.length - 1);
+      var randomWord = words[randomIndex];
+      this.words1.textContent = randomWord;
+      return randomWord;
     }
   }]);
   return Car;
 }();
 var player1 = document.querySelector(".car1");
 var words1 = document.querySelector(".words1");
+var trackHight1 = document.querySelector(".track1").offsetHeight;
+var slide1 = document.querySelector(".slide1").offsetHeight;
+console.log(trackHight1 - 250);
 var car1 = new Car(words, player1, words1);
+car1.RenderWord();
 },{"an-array-of-english-words":"../node_modules/an-array-of-english-words/index.json"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -179,7 +177,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59260" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52723" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
