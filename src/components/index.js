@@ -1,10 +1,8 @@
 let words = require("an-array-of-english-words");
 
 class Car {
-    constructor(words, player, words1) {
+    constructor(words) {
         this.words = words;
-        this.player = player;
-        this.words1 = words1;
         this.speed = 0;
         this.score = 0;
     }
@@ -12,9 +10,29 @@ class Car {
     RenderWord() {
         let randomIndex = Math.floor(Math.random() * this.words.length - 1);
         let randomWord = words[randomIndex];
-        this.words1.textContent = randomWord;
+        // this.words1.textContent = randomWord;
 
         return randomWord;
+    }
+}
+
+class Player1 extends Car {
+    constructor(words) {
+        super(words);
+    }
+
+    newFunc() {
+        console.log(this.RenderWord());
+    }
+}
+
+class Player2 extends Car {
+    constructor(words) {
+        super(words);
+    }
+
+    newFunc() {
+        console.log(this.RenderWord());
     }
 }
 
@@ -27,6 +45,8 @@ let slide1 = document.querySelector(".slide1").offsetHeight;
 
 console.log(trackHight1 - 250);
 
-let car1 = new Car(words, player1, words1);
+let firstCar = new Player1(words);
+let secondCar = new Player1(words);
 
-car1.RenderWord();
+firstCar.newFunc();
+secondCar.newFunc();
