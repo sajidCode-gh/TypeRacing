@@ -133,64 +133,57 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 var words = require("an-array-of-english-words");
-var Car = /*#__PURE__*/function () {
-  function Car(words) {
-    _classCallCheck(this, Car);
+var CarGame = /*#__PURE__*/function () {
+  function CarGame(words) {
+    _classCallCheck(this, CarGame);
     this.words = words;
-    this.speed = 0;
-    this.score = 0;
   }
-  _createClass(Car, [{
-    key: "RenderWord",
-    value: function RenderWord() {
+  _createClass(CarGame, [{
+    key: "getRandomWord",
+    value: function getRandomWord() {
       var randomIndex = Math.floor(Math.random() * this.words.length - 1);
       var randomWord = words[randomIndex];
-      // this.words1.textContent = randomWord;
-
       return randomWord;
     }
   }]);
-  return Car;
+  return CarGame;
 }();
-var Player1 = /*#__PURE__*/function (_Car) {
-  _inherits(Player1, _Car);
-  var _super = _createSuper(Player1);
-  function Player1(words) {
-    _classCallCheck(this, Player1);
-    return _super.call(this, words);
+var Player = /*#__PURE__*/function (_CarGame) {
+  _inherits(Player, _CarGame);
+  var _super = _createSuper(Player);
+  function Player(words, wordHolder) {
+    var _this;
+    _classCallCheck(this, Player);
+    _this = _super.call(this, words);
+    _this.wordHolder = wordHolder;
+    _this.speed = 0;
+    _this.score = 0;
+    return _this;
   }
-  _createClass(Player1, [{
-    key: "newFunc",
-    value: function newFunc() {
-      console.log(this.RenderWord());
+  _createClass(Player, [{
+    key: "renderedWord",
+    value: function renderedWord() {
+      this.wordHolder.textContent = this.getRandomWord();
+      return this.wordHolder.textContent;
+    }
+  }, {
+    key: "typeEvent",
+    value: function typeEvent() {
+      activeWord = this.renderedWord();
     }
   }]);
-  return Player1;
-}(Car);
-var Player2 = /*#__PURE__*/function (_Car2) {
-  _inherits(Player2, _Car2);
-  var _super2 = _createSuper(Player2);
-  function Player2(words) {
-    _classCallCheck(this, Player2);
-    return _super2.call(this, words);
-  }
-  _createClass(Player2, [{
-    key: "newFunc",
-    value: function newFunc() {
-      console.log(this.RenderWord());
-    }
-  }]);
-  return Player2;
-}(Car);
+  return Player;
+}(CarGame);
 var player1 = document.querySelector(".car1");
 var words1 = document.querySelector(".words1");
+var words2 = document.querySelector(".words2");
 var trackHight1 = document.querySelector(".track1").offsetHeight;
 var slide1 = document.querySelector(".slide1").offsetHeight;
 console.log(trackHight1 - 250);
-var firstCar = new Player1(words);
-var secondCar = new Player1(words);
-firstCar.newFunc();
-secondCar.newFunc();
+var firstPlayer = new Player(words, words1);
+var secondPlayer = new Player(words, words2);
+firstPlayer.renderedWord();
+secondPlayer.renderedWord();
 },{"an-array-of-english-words":"../node_modules/an-array-of-english-words/index.json"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -216,7 +209,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50717" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52193" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
