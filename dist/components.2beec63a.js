@@ -151,11 +151,12 @@ var CarGame = /*#__PURE__*/function () {
 var Player = /*#__PURE__*/function (_CarGame) {
   _inherits(Player, _CarGame);
   var _super = _createSuper(Player);
-  function Player(words, wordHolder) {
+  function Player(words, wordHolder, input1) {
     var _this;
     _classCallCheck(this, Player);
     _this = _super.call(this, words);
     _this.wordHolder = wordHolder;
+    _this.input1 = input1;
     _this.speed = 0;
     _this.score = 0;
     return _this;
@@ -169,7 +170,22 @@ var Player = /*#__PURE__*/function (_CarGame) {
   }, {
     key: "typeEvent",
     value: function typeEvent() {
+      var _this2 = this;
       activeWord = this.renderedWord();
+      var wordsLength = activeWord.length - 1;
+      var characterPoint = 0;
+      var matched = false;
+      this.input1.addEventListener("keydown", function (event) {
+        if (event.key.toString() == activeWord[characterPoint]) {
+          matched = true;
+          _this2.score++;
+          characterPoint++;
+        } else {
+          matched = false;
+        }
+        console.log("==========================");
+        console.log(matched, _this2.score, characterPoint);
+      });
     }
   }]);
   return Player;
@@ -177,13 +193,14 @@ var Player = /*#__PURE__*/function (_CarGame) {
 var player1 = document.querySelector(".car1");
 var words1 = document.querySelector(".words1");
 var words2 = document.querySelector(".words2");
+var input1 = document.querySelector(".input1");
+var input2 = document.querySelector(".input2");
 var trackHight1 = document.querySelector(".track1").offsetHeight;
 var slide1 = document.querySelector(".slide1").offsetHeight;
 console.log(trackHight1 - 250);
-var firstPlayer = new Player(words, words1);
+var firstPlayer = new Player(words, words1, input1);
 var secondPlayer = new Player(words, words2);
-firstPlayer.renderedWord();
-secondPlayer.renderedWord();
+firstPlayer.typeEvent();
 },{"an-array-of-english-words":"../node_modules/an-array-of-english-words/index.json"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -209,7 +226,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52193" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60412" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
