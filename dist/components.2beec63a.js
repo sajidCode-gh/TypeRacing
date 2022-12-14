@@ -151,12 +151,15 @@ var CarGame = /*#__PURE__*/function () {
 var Player = /*#__PURE__*/function (_CarGame) {
   _inherits(Player, _CarGame);
   var _super = _createSuper(Player);
-  function Player(words, wordHolder, input1) {
+  function Player(words, wordHolder, input1, activeLatter, slide1, trackHight1) {
     var _this;
     _classCallCheck(this, Player);
     _this = _super.call(this, words);
     _this.wordHolder = wordHolder;
     _this.input1 = input1;
+    _this.activeLatter = activeLatter;
+    _this.slide1 = slide1;
+    _this.trackHight1 = trackHight1;
     _this.speed = 0;
     _this.score = 0;
     return _this;
@@ -168,6 +171,18 @@ var Player = /*#__PURE__*/function (_CarGame) {
       return this.wordHolder.textContent;
     }
   }, {
+    key: "currentActiveLetter",
+    value: function currentActiveLetter(letter, el) {
+      this.wordHolder.append(el);
+      el.textContent = letter;
+      return el;
+    }
+  }, {
+    key: "calculateDistanceTraveling",
+    value: function calculateDistanceTraveling() {
+      var trackDistance = this.trackHight1.offsetHeight;
+    }
+  }, {
     key: "typeEvent",
     value: function typeEvent() {
       var _this2 = this;
@@ -176,15 +191,24 @@ var Player = /*#__PURE__*/function (_CarGame) {
       var characterPoint = 0;
       var matched = false;
       this.input1.addEventListener("keydown", function (event) {
-        if (event.key.toString() == activeWord[characterPoint]) {
-          matched = true;
-          _this2.score++;
-          characterPoint++;
+        if (characterPoint < wordsLength) {
+          _this2.currentActiveLetter(activeWord[characterPoint + 1], _this2.activeLatter);
+          if (event.key.toString() == activeWord[characterPoint]) {
+            matched = true;
+            _this2.score++;
+            characterPoint++;
+            _this2.wordHolder.style.backgroundColor = "white";
+          } else {
+            matched = false;
+            _this2.wordHolder.style.backgroundColor = "red";
+          }
+          console.log("==========================");
+          console.log(matched, _this2.score, characterPoint, wordsLength);
         } else {
-          matched = false;
+          activeWord = _this2.renderedWord();
+          wordsLength = activeWord.length - 1;
+          characterPoint = 0;
         }
-        console.log("==========================");
-        console.log(matched, _this2.score, characterPoint);
       });
     }
   }]);
@@ -195,10 +219,12 @@ var words1 = document.querySelector(".words1");
 var words2 = document.querySelector(".words2");
 var input1 = document.querySelector(".input1");
 var input2 = document.querySelector(".input2");
+var activeLatter = document.createElement("div");
+activeLatter.classList.add("current-letter");
 var trackHight1 = document.querySelector(".track1").offsetHeight;
 var slide1 = document.querySelector(".slide1").offsetHeight;
 console.log(trackHight1 - 250);
-var firstPlayer = new Player(words, words1, input1);
+var firstPlayer = new Player(words, words1, input1, activeLatter, slide1, trackHight1);
 var secondPlayer = new Player(words, words2);
 firstPlayer.typeEvent();
 },{"an-array-of-english-words":"../node_modules/an-array-of-english-words/index.json"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -226,7 +252,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60412" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58757" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

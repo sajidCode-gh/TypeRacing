@@ -101,5 +101,10 @@ a {
     font-size: 1.5rem;
 }
 
+.current-letter {
+    background-color: black;
+    color: white;
+}
+
 
 /*# sourceMappingURL=/src.9ad09f98.css.map */

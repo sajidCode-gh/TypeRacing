@@ -100,3 +100,8 @@ a {
     text-align: center;
     font-size: 1.5rem;
 }
+
+.current-letter {
+    background-color: black;
+    color: white;
+}
