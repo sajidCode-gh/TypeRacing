@@ -14,14 +14,15 @@ class CarGame {
 }
 
 class Player extends CarGame {
-    constructor(words, wordHolder, input1, activeLatter, slide1, trackHight1) {
+    constructor(words, wordHolder, input, activeLatter, slide, trackHight) {
         super(words);
         this.wordHolder = wordHolder;
-        this.input1 = input1;
+        this.input = input;
         this.activeLatter = activeLatter;
-        this.slide1 = slide1;
-        this.trackHight1 = trackHight1;
+        this.slide = slide;
+        this.trackHight = trackHight;
         this.speed = 0;
+        this.completeDistance = 100;
         this.score = 0;
     }
 
@@ -36,8 +37,24 @@ class Player extends CarGame {
         return el;
     }
 
-    calculateDistanceTraveling() {
-        let trackDistance = this.trackHight1.offsetHeight;
+    calculateDistanceTraveling(score) {
+        let trackDistance = this.trackHight.offsetHeight;
+        finishedLineDistance = trackDistance - 150;
+        if (finishedLineDistance > this.completeDistance) {
+            this.completeDistance++;
+        } else {
+            alert("Player1 Won 🥳");
+        }
+        console.log(this.completeDistance, finishedLineDistance, score);
+        this.slide.style.height = this.completeDistance + "px";
+    }
+
+    alwaysFocusInput() {
+        document.querySelector("*").addEventListener("click", () => {
+            this.input.focus();
+        });
+
+        window.onload = this.input.focus();
     }
 
     typeEvent() {
@@ -49,30 +66,37 @@ class Player extends CarGame {
 
         let matched = false;
 
-        this.input1.addEventListener("keydown", (event) => {
+        this.input.addEventListener("keydown", (event) => {
             if (characterPoint < wordsLength) {
-                this.currentActiveLetter(
-                    activeWord[characterPoint + 1],
-                    this.activeLatter
-                );
                 if (event.key.toString() == activeWord[characterPoint]) {
                     matched = true;
                     this.score++;
                     characterPoint++;
                     this.wordHolder.style.backgroundColor = "white";
+                    this.currentActiveLetter(
+                        activeWord[characterPoint],
+                        this.activeLatter
+                    );
+                    this.calculateDistanceTraveling(this.score);
                 } else {
                     matched = false;
                     this.wordHolder.style.backgroundColor = "red";
+                    this.currentActiveLetter(
+                        activeWord[characterPoint],
+                        this.activeLatter
+                    );
                 }
-
-                console.log("==========================");
-                console.log(matched, this.score, characterPoint, wordsLength);
             } else {
                 activeWord = this.renderedWord();
                 wordsLength = activeWord.length - 1;
                 characterPoint = 0;
             }
         });
+    }
+
+    init() {
+        this.typeEvent();
+        this.alwaysFocusInput();
     }
 }
 
@@ -85,11 +109,11 @@ let input2 = document.querySelector(".input2");
 let activeLatter = document.createElement("div");
 activeLatter.classList.add("current-letter");
 
-let trackHight1 = document.querySelector(".track1").offsetHeight;
+let trackHight1 = document.querySelector(".track1");
 
-let slide1 = document.querySelector(".slide1").offsetHeight;
+let slide1 = document.querySelector(".slide1");
 
-console.log(trackHight1 - 250);
+// console.log(trackHight1 - 250);
 
 let firstPlayer = new Player(
     words,
@@ -99,6 +123,6 @@ let firstPlayer = new Player(
     slide1,
     trackHight1
 );
-let secondPlayer = new Player(words, words2);
+// let secondPlayer = new Player(words, words2);
 
-firstPlayer.typeEvent();
+firstPlayer.init();

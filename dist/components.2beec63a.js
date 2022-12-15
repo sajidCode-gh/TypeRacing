@@ -151,16 +151,17 @@ var CarGame = /*#__PURE__*/function () {
 var Player = /*#__PURE__*/function (_CarGame) {
   _inherits(Player, _CarGame);
   var _super = _createSuper(Player);
-  function Player(words, wordHolder, input1, activeLatter, slide1, trackHight1) {
+  function Player(words, wordHolder, input, activeLatter, slide, trackHight) {
     var _this;
     _classCallCheck(this, Player);
     _this = _super.call(this, words);
     _this.wordHolder = wordHolder;
-    _this.input1 = input1;
+    _this.input = input;
     _this.activeLatter = activeLatter;
-    _this.slide1 = slide1;
-    _this.trackHight1 = trackHight1;
+    _this.slide = slide;
+    _this.trackHight = trackHight;
     _this.speed = 0;
+    _this.completeDistance = 100;
     _this.score = 0;
     return _this;
   }
@@ -179,37 +180,60 @@ var Player = /*#__PURE__*/function (_CarGame) {
     }
   }, {
     key: "calculateDistanceTraveling",
-    value: function calculateDistanceTraveling() {
-      var trackDistance = this.trackHight1.offsetHeight;
+    value: function calculateDistanceTraveling(score) {
+      var trackDistance = this.trackHight.offsetHeight;
+      finishedLineDistance = trackDistance - 150;
+      if (finishedLineDistance > this.completeDistance) {
+        this.completeDistance++;
+      } else {
+        alert("Player1 Won 🥳");
+      }
+      console.log(this.completeDistance, finishedLineDistance, score);
+      this.slide.style.height = this.completeDistance + "px";
+    }
+  }, {
+    key: "alwaysFocusInput",
+    value: function alwaysFocusInput() {
+      var _this2 = this;
+      document.querySelector("*").addEventListener("click", function () {
+        _this2.input.focus();
+      });
+      window.onload = this.input.focus();
     }
   }, {
     key: "typeEvent",
     value: function typeEvent() {
-      var _this2 = this;
+      var _this3 = this;
       activeWord = this.renderedWord();
       var wordsLength = activeWord.length - 1;
       var characterPoint = 0;
       var matched = false;
-      this.input1.addEventListener("keydown", function (event) {
+      this.input.addEventListener("keydown", function (event) {
         if (characterPoint < wordsLength) {
-          _this2.currentActiveLetter(activeWord[characterPoint + 1], _this2.activeLatter);
           if (event.key.toString() == activeWord[characterPoint]) {
             matched = true;
-            _this2.score++;
+            _this3.score++;
             characterPoint++;
-            _this2.wordHolder.style.backgroundColor = "white";
+            _this3.wordHolder.style.backgroundColor = "white";
+            _this3.currentActiveLetter(activeWord[characterPoint], _this3.activeLatter);
+            _this3.calculateDistanceTraveling(_this3.score);
           } else {
             matched = false;
-            _this2.wordHolder.style.backgroundColor = "red";
+            _this3.wordHolder.style.backgroundColor = "red";
+            _this3.currentActiveLetter(activeWord[characterPoint], _this3.activeLatter);
           }
-          console.log("==========================");
-          console.log(matched, _this2.score, characterPoint, wordsLength);
         } else {
-          activeWord = _this2.renderedWord();
+          activeWord = _this3.renderedWord();
           wordsLength = activeWord.length - 1;
           characterPoint = 0;
         }
       });
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      this.typeEvent();
+      this.alwaysFocusInput();
     }
   }]);
   return Player;
@@ -221,12 +245,15 @@ var input1 = document.querySelector(".input1");
 var input2 = document.querySelector(".input2");
 var activeLatter = document.createElement("div");
 activeLatter.classList.add("current-letter");
-var trackHight1 = document.querySelector(".track1").offsetHeight;
-var slide1 = document.querySelector(".slide1").offsetHeight;
-console.log(trackHight1 - 250);
+var trackHight1 = document.querySelector(".track1");
+var slide1 = document.querySelector(".slide1");
+
+// console.log(trackHight1 - 250);
+
 var firstPlayer = new Player(words, words1, input1, activeLatter, slide1, trackHight1);
-var secondPlayer = new Player(words, words2);
-firstPlayer.typeEvent();
+// let secondPlayer = new Player(words, words2);
+
+firstPlayer.init();
 },{"an-array-of-english-words":"../node_modules/an-array-of-english-words/index.json"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -252,7 +279,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58757" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61931" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

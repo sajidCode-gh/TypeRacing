@@ -106,5 +106,11 @@ a {
     color: white;
 }
 
+.input {
+    position: absolute;
+    top: 0;
+    opacity: 0;
+}
+
 
 /*# sourceMappingURL=/src.9ad09f98.css.map */
