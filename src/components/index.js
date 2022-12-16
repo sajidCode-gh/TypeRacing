@@ -1,6 +1,6 @@
 let words = require("an-array-of-english-words");
 
-class CarGame {
+export class CarGame {
     constructor(words) {
         this.words = words;
     }
@@ -14,13 +14,22 @@ class CarGame {
 }
 
 class Player extends CarGame {
-    constructor(words, wordHolder, input, activeLatter, slide, trackHight) {
+    constructor(
+        words,
+        wordHolder,
+        input,
+        activeLatter,
+        slide,
+        trackHight,
+        scoreHolder
+    ) {
         super(words);
         this.wordHolder = wordHolder;
         this.input = input;
         this.activeLatter = activeLatter;
         this.slide = slide;
         this.trackHight = trackHight;
+        this.scoreHolder = scoreHolder;
         this.speed = 0;
         this.completeDistance = 100;
         this.score = 0;
@@ -38,12 +47,16 @@ class Player extends CarGame {
     }
 
     calculateDistanceTraveling(score) {
-        let trackDistance = this.trackHight.offsetHeight;
-        finishedLineDistance = trackDistance - 150;
+        // let trackDistance = this.trackHight.offsetHeight;
+        let trackDistance = 500;
+        let finishedLineDistance = trackDistance;
         if (finishedLineDistance > this.completeDistance) {
             this.completeDistance++;
         } else {
             alert("Player1 Won 🥳");
+            this.completeDistance = 100;
+            this.score = 0;
+            this.typedWords = 0;
         }
         console.log(this.completeDistance, finishedLineDistance, score);
         this.slide.style.height = this.completeDistance + "px";
@@ -58,7 +71,7 @@ class Player extends CarGame {
     }
 
     typeEvent() {
-        activeWord = this.renderedWord();
+        let activeWord = this.renderedWord();
 
         let wordsLength = activeWord.length - 1;
 
@@ -71,6 +84,7 @@ class Player extends CarGame {
                 if (event.key.toString() == activeWord[characterPoint]) {
                     matched = true;
                     this.score++;
+                    this.scoreHolder.textContent = "Score: " + this.score;
                     characterPoint++;
                     this.wordHolder.style.backgroundColor = "white";
                     this.currentActiveLetter(
@@ -87,6 +101,7 @@ class Player extends CarGame {
                     );
                 }
             } else {
+                this.typedWords++;
                 activeWord = this.renderedWord();
                 wordsLength = activeWord.length - 1;
                 characterPoint = 0;
@@ -105,6 +120,8 @@ let words1 = document.querySelector(".words1");
 let words2 = document.querySelector(".words2");
 let input1 = document.querySelector(".input1");
 let input2 = document.querySelector(".input2");
+let score1 = document.querySelector(".score1");
+let score2 = document.querySelector(".score2");
 
 let activeLatter = document.createElement("div");
 activeLatter.classList.add("current-letter");
@@ -113,16 +130,14 @@ let trackHight1 = document.querySelector(".track1");
 
 let slide1 = document.querySelector(".slide1");
 
-// console.log(trackHight1 - 250);
-
 let firstPlayer = new Player(
     words,
     words1,
     input1,
     activeLatter,
     slide1,
-    trackHight1
+    trackHight1,
+    score1
 );
-// let secondPlayer = new Player(words, words2);
 
 firstPlayer.init();
