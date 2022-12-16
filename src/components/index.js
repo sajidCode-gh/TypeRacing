@@ -1,6 +1,6 @@
 let words = require("an-array-of-english-words");
 
-export class CarGame {
+class CarGame {
     constructor(words) {
         this.words = words;
     }
