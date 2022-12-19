@@ -1,3 +1,5 @@
+let socket = io();
+
 let words = [
     "acataleptic",
     "acataleptics",
@@ -201,5 +203,11 @@ let firstPlayer = new Player(
     trackHight1,
     score1
 );
+
+socket.on("init", handleInit);
+
+function handleInit(msg) {
+    console.log(msg);
+}
 
 firstPlayer.init();

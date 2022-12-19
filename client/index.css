@@ -33,6 +33,12 @@ a {
 
 /* ================= */
 
+input,
+button {
+    padding: 5px;
+    border-radius: 5px;
+}
+
 .container {
     background-color: var(--bg);
     width: 100%;
@@ -110,4 +116,20 @@ a {
     position: absolute;
     top: 0;
     opacity: 0;
+}
+
+.container {
+    position: relative;
+}
+
+.model {
+    position: absolute;
+    inset: 0 0 0 0;
+    background-color: rgba(255, 255, 255, 0.686);
+    display: grid;
+    place-content: center;
+}
+
+.model > * {
+    margin: 10px 0;
 }
