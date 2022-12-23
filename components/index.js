@@ -95,7 +95,7 @@ class Player extends CarGame {
         this.trackHight = trackHight;
         this.scoreHolder = scoreHolder;
         this.speed = 0;
-        this.completeDistance = 400;
+        this.completeDistance = 100;
         this.score = 0;
         this.playButton = playButton;
         this.model = model;
