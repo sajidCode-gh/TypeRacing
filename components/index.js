@@ -1,5 +1,3 @@
-let socket = io();
-
 let words = [
     "acataleptic",
     "acataleptics",
@@ -85,7 +83,9 @@ class Player extends CarGame {
         activeLatter,
         slide,
         trackHight,
-        scoreHolder
+        scoreHolder,
+        playButton,
+        model
     ) {
         super(words);
         this.wordHolder = wordHolder;
@@ -95,8 +95,10 @@ class Player extends CarGame {
         this.trackHight = trackHight;
         this.scoreHolder = scoreHolder;
         this.speed = 0;
-        this.completeDistance = 100;
+        this.completeDistance = 400;
         this.score = 0;
+        this.playButton = playButton;
+        this.model = model;
     }
 
     renderedWord() {
@@ -117,10 +119,11 @@ class Player extends CarGame {
         if (finishedLineDistance > this.completeDistance) {
             this.completeDistance++;
         } else {
-            alert("Player1 Won 🥳");
+            alert("Distance completed 🥳");
             this.completeDistance = 100;
             this.score = 0;
             this.typedWords = 0;
+            this.model.style.display = "grid";
         }
         console.log(this.completeDistance, finishedLineDistance, score);
         this.slide.style.height = this.completeDistance + "px";
@@ -174,18 +177,20 @@ class Player extends CarGame {
     }
 
     init() {
-        this.typeEvent();
-        this.alwaysFocusInput();
+        this.playButton.addEventListener("click", () => {
+            this.typeEvent();
+            this.alwaysFocusInput();
+            this.model.style.display = "none";
+        });
     }
 }
 
 let player1 = document.querySelector(".car1");
 let words1 = document.querySelector(".words1");
-let words2 = document.querySelector(".words2");
 let input1 = document.querySelector(".input1");
-let input2 = document.querySelector(".input2");
 let score1 = document.querySelector(".score1");
-let score2 = document.querySelector(".score2");
+let playButton = document.querySelector(".play button");
+let model = document.querySelector(".play");
 
 let activeLatter = document.createElement("div");
 activeLatter.classList.add("current-letter");
@@ -201,13 +206,9 @@ let firstPlayer = new Player(
     activeLatter,
     slide1,
     trackHight1,
-    score1
+    score1,
+    playButton,
+    model
 );
-
-socket.on("init", handleInit);
-
-function handleInit(msg) {
-    console.log(msg);
-}
 
 firstPlayer.init();

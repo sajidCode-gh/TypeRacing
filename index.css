@@ -122,7 +122,7 @@ button {
     position: relative;
 }
 
-.model {
+.play {
     position: absolute;
     inset: 0 0 0 0;
     background-color: rgba(255, 255, 255, 0.686);
@@ -130,6 +130,7 @@ button {
     place-content: center;
 }
 
-.model > * {
-    margin: 10px 0;
+.play button {
+    cursor: pointer;
+    padding: 5px 10px;
 }
